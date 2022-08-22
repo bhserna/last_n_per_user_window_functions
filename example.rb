@@ -33,14 +33,13 @@ end
 
 example "SQL query" do
   sql = <<-SQL
-    SELECT posts.*
-    FROM (
+    SELECT * FROM (
       SELECT posts.*, dense_rank() OVER (
         PARTITION BY posts.user_id
         ORDER BY posts.id DESC
       ) AS posts_rank
       FROM posts
-    ) posts
+    ) AS ranked_posts
     WHERE posts_rank <= 3
   SQL
 
